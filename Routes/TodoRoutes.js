@@ -25,7 +25,12 @@ router.get("/todos", async (req, res) => {
 
 // get single todo
 router.get("/todo/:id", async (req, res) => {
-  res.send({ message: "get single todo " });
+  try {
+    const result = await Todo.find({ _id: req.params.id });
+    res.send(result);
+  } catch (error) {
+    res.send({ message: error });
+  }
 });
 
 // post single todo
