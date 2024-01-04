@@ -28,6 +28,23 @@ router.post("/todo/post", async (req, res) => {
   }
 });
 
+// update a document
+router.put("/todo/update/:id", async (req, res) => {
+  try {
+    await Todo.updateOne(
+      { _id: req.params.id },
+      {
+        $set: {
+          title: "updated by mongoose 2nd time",
+        },
+      }
+    );
+    res.send({ messsage: "data was updated successfully" });
+  } catch (error) {
+    res.send({ error: error });
+  }
+});
+
 // delete a todo
 router.delete("/todo/delete/:id", async (req, res) => {
   res.send({ message: "delete single todo " });
