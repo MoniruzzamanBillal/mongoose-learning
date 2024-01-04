@@ -31,14 +31,19 @@ router.post("/todo/post", async (req, res) => {
 // update a document
 router.put("/todo/update/:id", async (req, res) => {
   try {
-    await Todo.updateOne(
+    // await Todo.updateOne(
+    const result = await Todo.findOneAndUpdate(
       { _id: req.params.id },
       {
         $set: {
-          title: "updated by mongoose 2nd time",
+          title: "updated by mongoose 2 ",
         },
+      },
+      {
+        new: true,
       }
     );
+    console.log(result);
     res.send({ messsage: "data was updated successfully" });
   } catch (error) {
     res.send({ error: error });
