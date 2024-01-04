@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
+const TodoSchema = require("../Schema/TodoSchema");
+
+const Todo = new mongoose.model("Todo", TodoSchema);
 
 // get all todo
 router.get("/todos", async (req, res) => {
@@ -14,7 +17,15 @@ router.get("/todo/:id", async (req, res) => {
 
 // post single todo
 router.post("/todo/post", async (req, res) => {
-  res.send({ message: "add single todo " });
+  try {
+    const postData = new Todo(req.body);
+
+    const response = await postData.save();
+
+    res.send({ message: "data added successfully" });
+  } catch (error) {
+    res.send({ message: error });
+  }
 });
 
 // delete a todo
