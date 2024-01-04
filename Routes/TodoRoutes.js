@@ -8,7 +8,10 @@ const Todo = new mongoose.model("Todo", TodoSchema);
 // get all todo
 router.get("/todos", async (req, res) => {
   try {
-    const result = await Todo.find({});
+    const result = await Todo.find({}).select({
+      _id: 0,
+      __v: 0,
+    });
 
     res.send({ result });
 
