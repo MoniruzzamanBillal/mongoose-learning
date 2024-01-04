@@ -7,7 +7,17 @@ const Todo = new mongoose.model("Todo", TodoSchema);
 
 // get all todo
 router.get("/todos", async (req, res) => {
-  res.send({ message: "get all todos " });
+  try {
+    const result = await Todo.find({});
+
+    res.send({ result });
+
+    console.log(result);
+  } catch (error) {
+    res.send({
+      message: error,
+    });
+  }
 });
 
 // get single todo
