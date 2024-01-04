@@ -70,7 +70,12 @@ router.put("/todo/update/:id", async (req, res) => {
 
 // delete a todo
 router.delete("/todo/delete/:id", async (req, res) => {
-  res.send({ message: "delete single todo " });
+  try {
+    const result = await Todo.deleteOne({ _id: req.params.id });
+    res.send({ message: "item deleteed successfully" });
+  } catch (error) {
+    res.send({ message: error });
+  }
 });
 
 module.exports = router;
