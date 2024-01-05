@@ -5,6 +5,14 @@ const TodoSchema = require("../Schema/TodoSchema");
 
 const Todo = new mongoose.model("Todo", TodoSchema);
 
+// ! using instance method
+// get in active todo
+router.get("/todos/inactive", async (req, res) => {
+  const todo = new Todo();
+  const data = await todo.findInactive();
+  res.send({ data });
+});
+
 // get all todo
 router.get("/todos", async (req, res) => {
   try {
