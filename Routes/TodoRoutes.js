@@ -16,10 +16,12 @@ router.get("/todos/inactive", async (req, res) => {
 // get all todo
 router.get("/todos", async (req, res) => {
   try {
-    const result = await Todo.find({}).select({
-      _id: 0,
-      __v: 0,
-    });
+    const result = await Todo.find({})
+      .populate("user", "name userName -_id") // 1st parameter , collection name , 2nd parameter , what we need from db
+      .select({
+        _id: 0,
+        __v: 0,
+      });
 
     res.send({ result });
 
@@ -44,7 +46,12 @@ router.get("/todo/:id", async (req, res) => {
 // post single todo
 router.post("/todo/post", async (req, res) => {
   try {
-    const postData = new Todo(req.body);
+    const newTodo = {
+      ...req.body,
+      user: req.userId,
+    };
+
+    const postData = new Todo(newTodo);
 
     const response = await postData.save();
 

@@ -12,6 +12,10 @@ const todoSchema = mongoose.Schema({
     type: "string",
     enum: ["active", "inactive"],
   },
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "User", // model name
+  },
 });
 
 todoSchema.methods = {
